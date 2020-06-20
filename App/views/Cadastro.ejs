@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registrar Atendimento Hupe</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+<body>
+    <header class="bg-dark">
+        <div class="col-100">
+            <h1 class="color-white">Registrar Atendimento Hupe - Em desenvolvimento</h1>
+        </div>
+    </header>
+    <section>
+        <div class="col-30 bg-grey">
+            <form action="/show" method="POST">
+                <legend>Incluir Dados de atendimento</legend>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="Nome" name="Nome">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="CPF" name="CPF">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="Processo Judicial" name="Processo Judicial">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Medicamento:
+                            <select id="cboMed" name="Medicamento">
+                                <option value=""></option>
+                                <option value="AFLIBERCEPTE (Eylia®)">AFLIBERCEPTE (Eylia®)</option>
+                                <option value="ANTI-VEGF">ANTI-VEGF</option>
+                                <option value="BEVACIZUMABE (Avastin®)">BEVACIZUMABE (Avastin®)</option>
+                                <option value="DEXAMETASONA (Ozurdex®)">DEXAMETASONA (Ozurdex®)</option>
+                                <option value="INJE -O INTRAVíTREA VEFG">INJE -O INTRAVíTREA VEFG</option>
+                                <option value="RANIBIZUMABE (Lucentis®)">RANIBIZUMABE (Lucentis®)</option>
+                                <option value="TRIANCINOLONA ACETONIDA">TRIANCINOLONA ACETONIDA</option>
+                            </select>
+                        </td>
+                        <td>Indicação:
+                            <select id="cboInd" name="INDICADO">
+                                <option value=""></option>
+                                <option value="SIM OE">SIM OE</option>
+                                <option value="SIM OD">SIM OD</option>
+                                <option value="SIM AO">SIM AO</option>
+                                <option value="SEM INDICAÇÃO">SEM INDICAÇÃO</option>
+                                <option value="NÃO COMPARECEU">NÃO COMPARECEU</option>
+                                <option value="AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO">AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="IV AGENDADA" name="IV AGENDADA">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button >Cadastrar</button>
+                        </td>
+                    </tr>
+                </table>
+                
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+  <title>Registrar Atendimento Hupe</title>
+  <!-- incluindo css -->
+  <link href="/css/style2.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="/js/jquery-3.5.1.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header class="bg-dark">
+        <div class="col-100">
+            <h1 class="color-white">Atendimento Hupe - Dados Cadastrados</h1>
+        </div>
+    </header>
+        <nav>
+			<div>
+                
+				<table class="bg-dark">
+                    <tr style="font-size: medium;font-weight: bold;">
+                        <td width="60"><lable id="ar">| Atendimentos Realizados |</lable></td>  
+                        <td width="60"><lable>| Cadastrar Novo Atendimento |</lable></td>  
+                        <td width="60"><lable>| Cadastrar Novo Agendamento |</lable></td>                
+                    </tr>
+                 </table> 
+			</div>
+			
+		</nav>
+            
+            <table>
+                   <tr style="background-color:#bdc3c7">
+                    <div>
+                      <form id="form1" action="/showFiltro" method="POST">
+                        <td><input type="text" id="Nome" placeholder="Nome" name="Nome" ></td>
+                        <td><input type="text" id="CPF" placeholder="CPF" name="CPF" ></td>
+                        <td><input type="text" id="Medicamento" placeholder="Medicamento" 
+                            name="Medicamento"></td>   
+                      </form>
+                    </div>
+                        <td width="50">
+                            <button id="lespera" title="Filtra por Lista de Espera!" alt="Filtra por Lista de Espera">
+                                Lista Espera</button></td>  
+                        <td width="50">
+                            <button id="latend" title="Filtra por Data de Atendimento!" alt="Filtra por Data de Atendimento!">
+                                Data Atendimento</button> </td>  
+                        <td width="50">
+                            <button id="lagend" title="Filtra por Data de Agendamento!" alt="Filtra por Data de Agendamento">
+                                Data Agendamento</button> </td>                
+                   </tr>
+                <%  index = 1
+                    data.forEach(function(doc) { 
+                %>
+                    <tr style="border-bottom: 1px solid var(--silver);">
+                        <td><%= doc.Nome %></td>
+                        <td align="center"><%= doc.CPF %></td>
+                        <td align="center"><%= doc.Medicamento %></td>
+                        <td><table>
+                                <% if( doc.Lista_Espera ){ %>
+                                    <tr>
+                                        <td><%=moment(doc.Lista_Espera.Data).format('Do MMMM, YYYY') %> 
+                                        </td>
+                                    </tr>
+                                <% } %>        
+                            </table>                            
+                        </td>
+                        <td><table>
+                            <% doc.Atendimento_Inicial.forEach(function(ai) { %>
+                                <% if(ai.Data_Atendimento){%>
+                                  <tr>
+                                    <td>
+                                        <a data-toggle="collapse" href="#collapse<%= index %>">
+                                             <%=moment(ai.Data_Atendimento).format('Do MMMM, YYYY') %>
+                                        </a>
+                                    </td>
+                                  </tr>
+                                  <tr><td>
+                                    <div id="collapse<%= index %>" class="panel-collapse collapse">    
+                                       <table class="button2">
+                                              <tr>
+                                                <td>Indicação:<%=ai.Indicacao %></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Agendado:<%=ai.Agendado %></td>
+                                              </tr>
+                                          </table>
+                                      </div>    
+                                     </td>                                        
+                                  </tr>
+                                <% index++ }%>  
+                            <% }) %>        
+                            </table>                            
+                        </td>
+                        <td><table>
+                            <% if( doc.Agendamento_Aplicacao){
+                               doc.Agendamento_Aplicacao.forEach(function(aa) { %>
+                                <tr>
+                                    <td>
+                                        <a data-toggle="collapse" href="#collapse<%= index %>">
+                                             <%=moment(aa.Data).format('Do MMMM, YYYY') %>
+                                        </a>
+                                    </td>
+                                  </tr>
+                                  <tr><td>
+                                    <div id="collapse<%= index %>" class="panel-collapse collapse">    
+                                       <table class="button2">
+                                              <tr>
+                                                <td>Indicação:<%=aa.Indicacao %></td>
+                                              </tr>                                              
+                                          </table>
+                                      </div>    
+                                     </td>                                        
+                                  </tr>
+                            <% index++ })
+                             } %>        
+                            </table>                            
+                        </td>                        
+                    </tr>
+                <% index++ }) %>            
+            </table>
+    <script>
+                 $( '#ar' ).click(function() {                                       
+                    window.location.href = '/show';
+                     }); 
+                     
+                //tratando filtros     
+                $('#Nome').keypress(function (e) {
+                 if (e.which == 13) {
+                   $('#form1').submit();
+                   return false;
+                   }
+                 });
+                 $('#CPF').keypress(function (e) {
+                 if (e.which == 13) {
+                   $('#form1').submit();
+                   return false;
+                   }
+                 });
+                 $('#Medicamento ').keypress(function (e) {
+                 if (e.which == 13) {
+                   $('#form1').submit();
+                   return false;
+                   }
+                 });
+                            
+                 $( '#lespera' ).click(function() {
+                    window.location.href = '/showCols?s=espera';                   
+                 }); 
+                 $( '#latend' ).click(function() {
+                    window.location.href = '/showCols?s=atend';                   
+                 });
+                 $( '#lagend' ).click(function() {
+                    window.location.href = '/showCols?s=agend';                   
+                 });
+    </script>
+</body>
+</html>
