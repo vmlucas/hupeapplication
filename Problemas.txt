@@ -1,0 +1,50 @@
+{ 
+            "Agendamento_Aplicacao": { $elemMatch: { $and:[ 
+                                { Data: {"$gte": new Date(ano+"-"+mes+"-01T00:00:00")}}, 
+                                { Data: {"$lte": new Date(ano+"-"+mes+"-31T00:00:00")}}]}}}
+
+
+{ 
+  "Atendimento_Inicial : { $elemMatch: { $and:[ 
+                                { Data_Atendimento" : {$ne:null}},
+                                    {$or:[{ Indicacao : "SIM OD" },{Indicacao : "SIM OE" },{ Indicacao : "SIM AO" }] }
+                                              ]
+                                       }
+                         }
+}
+
+
+$and: [ {"Atendimento_Inicial.Data_Atendimento" : {$ne:null}},{$or:[{"Atendimento_Inicial.Indicacao" : "SIM OD" },{"Atendimento_Inicial.Indicacao" : "SIM OE" },{"Atendimento_Inicial.Indicacao" : "SIM AO" }] }]
+
+{ 
+  Atendimento_Inicial : { $elemMatch: { $and:[ 
+                                { Data_Atendimento : {$ne:null}},
+                                    {$or:[{ Indicacao : "SIM OD" },{Indicacao : "SIM OE" },{ Indicacao : "SIM AO" }] }
+                                              ]
+                                       }
+                         }
+}
+
+
+
+ 
+{ $and: [ {"Atendimento_Inicial.Data_Atendimento" : null},{"Agendamento_Aplicacao" : { $exists : 1 }}] }
+
+{ $and: [
+{ 
+  Atendimento_Inicial : { $elemMatch: { $and:[ 
+                                { Data_Atendimento : {$ne:null}},
+                                    {$or:[{ Indicacao : "SIM OD" },{Indicacao : "SIM OE" },{ Indicacao : "SIM AO" }] }
+                                              ]
+                                       }
+                         }
+},
+{"Agendamento_Aplicacao" : null}
+] }
+
+
+
+
+
+
+

@@ -1,12 +1,21 @@
 var moment = require('moment');
 
-module.exports = function(app,model){
-app.get('/showCols', (req, res) => {
-    param = req.query.s;
-    model.getCollectionsNotNull( param, function(err, results) {
+function authenticationMiddleware () {  
+    return function (req, res, next) {
+      if (req.isAuthenticated()) {
+        return next()
+      }
+      res.redirect("/login?fail='Refaça o Login'")
+    }
+}
+
+module.exports = function(app,model,passport){
+app.post('/showCols',authenticationMiddleware (), (req, res) => {
+    var myData = (req.body)
+    model.getCollectionsNotNull( myData, function(err, results) {
          if (err) return console.log(err)
          res.render('index.ejs', { moment: moment, data: results })
  
-     })   
+     })     
  })
 }

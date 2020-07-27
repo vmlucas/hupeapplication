@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registrar Atendimento de Avaliação - Intravitrea Hupe</title>
+  <link href="/css/style2.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="/js/jquery-3.5.1.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-grey">
+    <header class="bg-dark">
+        <div class="col-100">
+            <h1 class="color-white">Registrar Atendimento de Avaliação - Intravitrea Hupe</h1>
+        </div>
+    </header>
+    <div class="col-100 bg-dark">    
+            <table>
+                <tr style="font-size: medium;font-weight: bold;">
+                    <td width="60"><lable id="ar" style="cursor: pointer;">| Atendimentos Realizados |</lable></td>  
+                    <td width="60"><lable id="aa" style="cursor: pointer;">| Cadastrar Atendimento Avaliação |</lable></td>  
+                    <td width="60"><lable id="agend" style="cursor: pointer;">| Cadastrar Aplicação Medicamento |</lable></td>
+                    <td width="60"><lable id="dashboard" style="cursor: pointer;">| Análise dos Dados |</lable></td>                
+                </tr>
+             </table> 
+    </div>
+    <section>
+    <div class="col-70">
+    <%  
+        nome = "";
+        cpf = "";
+        processo = "";
+        origem = "";
+        primAvals = null;  
+        lEspera = null;
+        botao = "insert";
+        if( tipo == "dados" )
+        {
+           
+           if(data.length)
+           {
+              data.forEach(function(doc) {
+                 titulo = "Atualização:";
+                 botao = "update";
+                 nome = doc.Nome;
+                 cpf = doc.CPF;
+                 processo = doc.Processo_Judicial;
+                 origem = doc.Origem;
+                 primAvals = doc.Atendimento_Inicial;
+                 lEspera = doc.Lista_Espera;
+                 textoForm = "Dados Paciente";
+              });
+           }   
+           else       
+           { 
+              textoForm = "Paciente Não Encontrado, Cadastre um novo!";
+              titulo = "Inclusão:";
+              nome = name;
+              cpf = "";
+              processo = "";
+              primAvals = null; 
+              lEspera = null;
+           }
+        }
+        else if( tipo == "sucesso" ){
+            textoForm = "Dados Atualizados!!! Digite o nome do Paciente ou CPF para verificação";
+            titulo = "";
+        }  
+        else{
+            textoForm = "Digite o nome do Paciente ou CPF para verificação";
+            titulo = "";
+        }
+    %>
+       <legend><%=textoForm %></legend>
+       <table>   
+        <tr>
+           <td> 
+                <table>
+                    <tr>
+                       <td align="center">
+                          <b><%=titulo %></b>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nome:
+                        </td>    
+                        <td><input id="buscar" type="text" placeholder="<%=nome %>" name="Nome" value="<%=nome %>"> 
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td>
+                            CPF:
+                        </td><td><input id="cpf" type="text" placeholder="<%=cpf %>" name="CPF" value="<%=cpf %>">
+                        </td>
+                    </tr>
+                    <%
+                     if( tipo == "dados" )
+                     {
+                    %>
+                    <tr>
+                        <td>
+                            Processo Judicial:</td>
+                        <td>    
+                            <input id="processo" type="text" placeholder="<%=processo %>" name="Processo_Judicial" value="<%=processo %>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Origem:</td>
+                        <td>    
+                            <select id="origem" name='origem'>
+                                <%
+                                    var options = [ "", "Central de Mandados", "CLRS", "PGE" ];
+                                    for ( var i = 0; i < options.length; i++ )
+                                    {
+                                       var selected = ( origem == options[ i ] ) ? "selected" : "";
+                                       %><option value="<%=options[ i ] %>" <%=selected %>><%=options[ i ]%></option><%
+                                    }
+                                 %>                                
+                            </select>                                
+                        </td>
+                    </tr>
+                </table>
+                <% if( lEspera ){                                
+                %> 
+                <table>
+                    <tr>
+                        <td>Dados Lista de Espera
+                        <a data-toggle="collapse" href="#listaEspera">
+                          <img src="/css/seta.JPG" width="10" height="15" style="cursor: pointer;"></img>
+                        </a>
+                        </td>
+                    </tr>                    
+                </table>
+                <div id="listaEspera" class="panel-collapse collapse">  
+                    <table>
+                            <tr style="background-color:slategray; font-style: italic;font-size: 14;font-weight: bold;">
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">Medicamento</td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">Data</td>
+                                <td style="border: 1px solid black;
+                                    border-collapse: collapse;">Telefone</td>  
+                            </tr>
+                            
+                            <tr>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;"><%=lEspera.Medicamento %></td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;"><%=moment(lEspera.Data).format('Do MMMM, YYYY') %></td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;"><%=lEspera.Telefone %></td>
+                            </tr>
+                            
+                            <!--<div id="">
+                            </div>-->                       
+                </table>
+                </div>
+                <% } %>
+                <table>
+                    <tr>
+                        <td>Dados Atendimento Avaliação
+                        <lable id="loadAtendData" style="cursor: pointer; color: tomato;size: 15;">+</lable></td>
+                    </tr>                    
+                </table> 
+                <table id="atendData">
+                        <tr style="background-color:slategray; font-style: italic;font-size: 14;font-weight: bold;">
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Medicamento</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Data Avaliação</td>
+                            <td style="border: 1px solid black;
+                                border-collapse: collapse;">Indicação</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Agendamento Futuro</td>    
+                        </tr>
+                        <% if( primAvals ){
+                            primAvals.forEach(function(pa) {                                
+                        %> 
+                        <tr>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;"><%=pa.Medicamento %></td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;"><%=moment(pa.Data_Atendimento).format('Do MMMM, YYYY') %></td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;"><%=pa.Indicacao %></td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;"><%=pa.Agendado %></td>
+                        </tr>
+                        <% })} %>
+                        <!--<div id="">
+                        </div>-->                       
+                </table>
+                <table>
+                    <tr>
+                        <td align="center">
+                            <% if (botao == "update"){ %> 
+                               <button id="update" class="button-big">Atualizar</button>
+                            <% }else{ %>     
+                               <button id="insert" class="button-big">Salvar</button>
+                            <%}%>   
+                        </td>
+                    </tr>
+                </table>
+                <% } %>    
+           </td>           
+        </tr>
+        </table>   
+    </div>
+</section>    
+
+<script>
+    //action do menu   atendData
+    cont = 1;
+      $( '#ar' ).click(function() {                                       
+         window.location.href = '/show';
+          }); 
+      
+      $( '#aa' ).click(function() {                                       
+           window.location.href = '/cadAtend';
+          });     
+      $( '#agend' ).click(function() {                                       
+           window.location.href = '/cadAplic';
+      }); 
+      
+      $( '#dashboard' ).click(function() {                                       
+           window.open( 
+             "https://charts.mongodb.com/charts-project-0-ohubx/public/dashboards/a5ca7e6b-efd7-4340-9cf4-5cf2d446d4a9", "_blank"); 
+           }); 
+      
+      //eventos 
+      $('#buscar').keypress(function (e) {
+                  var nomeBusca = $("#buscar").val();
+                  if (e.which == 13) {
+                    //validação formulário
+                    $(".error").remove();
+                    if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                    }  
+                    $('<form>', {
+                       "id" : "formJQ", 
+                       "html": '<input type="text" name="Nome" value="' + nomeBusca + '" />',
+                       "action": '/buscarAtend',
+                       "method": 'POST'
+                    }).appendTo(document.body).submit();  
+                  return false;  
+            }
+      });
+      $('#cpf').keypress(function (e) {
+                  $(this).mask('000.000.000-00');
+                  var cpfBusca = $("#cpf").val();
+                  if (e.which == 13) {
+                    //validação formulário
+                    $(".error").remove();
+                    if (cpfBusca.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                    }  
+                    $('<form>', {
+                       "id" : "formJQ", 
+                       "html": '<input type="text" name="CPF" value="' + cpfBusca + '" />',
+                       "action": '/buscarAtend',
+                       "method": 'POST'
+                    }).appendTo(document.body).submit();  
+                  return false;  
+            }
+      });
+
+      $('#insert').click(function() {
+                 var nomeBusca = $("#buscar").val();
+                 var cpf = $("#cpf").val();
+                 var processo = $("#processo").val();
+                 var origem = $("#origem").val();
+                 var med = $("#cboMed").val();
+                 var agendado = $("#agendado").val();
+                 var indic = $("#cboInd").val();
+                 var dataInput = $("#dateInput").val();
+                 
+                 $(".error").remove();
+                 if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                 }  
+                 if (cpf.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (processo.length < 1) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Processo Judicial do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (med == undefined) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Preencha o formulário de Dados de Agendamento!!</span>');
+                       return false;
+                 }
+                 if (med.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione o medicamento!!</span>');
+                       return false;
+                 }
+                 if (indic.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione a indicação!!</span>');
+                       return false;
+                 }
+                 if (dataInput.length < 10) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Entre com a Data da Aplicação!!</span>');
+                       return false;
+                 } 
+
+                 $('<form>', {
+                      "id" : "formSaveJQ", 
+                      "html": '<input type="text" name="Nome" value="' + nomeBusca + '" /><input type="text" name="CPF" value="' + cpf + '" /><input type="text" name="Processo_Judicial" value="' + processo + '" /><input type="text" name="origem" value="' + origem + '" /><input type="text" name="medic" value="' + med + '" /><input type="text" name="Data" value="' + dataInput + '" /><input type="text" name="indic" value="' + indic + '" /><input type="text" name="agendado" value="' + agendado + '" />',
+                      "action": '/insertDocAtend',
+                      "method": 'POST'
+                 }).appendTo(document.body).submit();  
+                 return false;  
+      });
+
+      $('#update').click(function() {
+                 var nomeBusca = $("#buscar").val();
+                 var cpf = $("#cpf").val();
+                 var processo = $("#processo").val();
+                 var origem = $("#origem").val();
+                 var med = $("#cboMed").val();
+                 var agendado = $("#agendado").val();
+                 var indic = $("#cboInd").val();
+                 var dataInput = $("#dateInput").val();
+                 
+                 $(".error").remove();
+                 if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                 }  
+                 if (cpf.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (processo.length < 1) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Processo Judicial do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (med == undefined) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Preencha o formulário de Dados de Agendamento!!</span>');
+                       return false;
+                 }
+                 if (med.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione o medicamento!!</span>');
+                       return false;
+                 }
+                 if (indic.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione a indicação!!</span>');
+                       return false;
+                 }
+                 if (dataInput.length < 10) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Entre com a Data da Aplicação!!</span>');
+                       return false;
+                 } 
+
+                 $('<form>', {
+                      "id" : "formSaveJQ", 
+                      "html": '<input type="text" name="Nome" value="' + nomeBusca + '" /><input type="text" name="CPF" value="' + cpf + '" /><input type="text" name="Processo_Judicial" value="' + processo + '" /><input type="text" name="origem" value="' + origem + '" /><input type="text" name="medic" value="' + med + '" /><input type="text" name="Data" value="' + dataInput + '" /><input type="text" name="indic" value="' + indic + '" /><input type="text" name="agendado" value="' + agendado + '" />',
+                      "action": '/updateDocAtend',
+                      "method": 'POST'
+                 }).appendTo(document.body).submit();  
+                 return false;  
+      });
+
+      $( '#loadAtendData' ).click(function() {    
+         // alert("Clicou");                                   
+        //<div id="agendData">
+        divLoad = "<tr><td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<select id='cboMed' name='Medicamento'>";
+        divLoad = divLoad +"<option value=''></option>";
+        divLoad = divLoad +"<option value='ANTI-VEGF'>ANTI-VEGF</option>";
+        divLoad = divLoad +"<option value='AFLIBERCEPTE (Eylia®)'>AFLIBERCEPTE (Eylia®)</option>";
+        divLoad = divLoad +"<option value='TRIANCINOLONA ACETONIDA'>TRIANCINOLONA ACETONIDA</option>";
+        divLoad = divLoad +"<option value='RANIBIZUMABE (Lucentis®)'>RANIBIZUMABE (Lucentis®)</option>";
+        divLoad = divLoad +"<option value='INJE -O INTRAVíTREA VEFG'>INJE -O INTRAVíTREA VEFG</option>";
+        divLoad = divLoad +"<option value='DEXAMETASONA (Ozurdex®)'>DEXAMETASONA (Ozurdex®)</option>";
+        divLoad = divLoad +"<option value='BEVACIZUMABE (Avastin®)'>BEVACIZUMABE (Avastin®)</option>";
+        divLoad = divLoad +"</select></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<input id='dateInput' type='text' placeholder='dd/mm/aaaa' name='Data'></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<select id='cboInd' name='Indicacao'>";
+        divLoad = divLoad +"<option value=''></option>";
+        divLoad = divLoad +"<option value='SIM OE'>SIM OE</option>";
+        divLoad = divLoad +"<option value='SIM OD'>SIM OD</option>";
+        divLoad = divLoad +"<option value='SIM AO'>SIM AO</option>";
+        divLoad = divLoad +"<option value='SEM INDICAÇÃO'>SEM INDICAÇÃO</option>";
+        divLoad = divLoad +"<option value='NÃO COMPARECEU'>NÃO COMPARECEU</option>";
+        divLoad = divLoad +"<option value='AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO'>AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO</option>";
+        divLoad = divLoad +"</select></td>"; 
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<input id='agendado' type='text' name='agendado'></td></tr>";
+        
+        $(divLoad).appendTo('#atendData');   
+        
+        $('#dateInput').keypress(function (e) {
+           $(this).mask("00/00/0000");
+        });
+
+        cont++;
+        });
+    </script> 
+
+</body>
+</html>
