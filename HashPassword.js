@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
 
-const password = "123"
+const password = "anders@n2020"
 const saltRounds = 10
 
 bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -17,3 +17,14 @@ bcrypt.genSalt(saltRounds, function (err, salt) {
     })
   }
 })
+
+
+/*
+sharon 071184
+vmlucas vsvLL430
+adm 123
+jacqueline jac2020
+eduardo edu2020@
+patrick patrick@2020
+anderson anders@n2020
+*/
