@@ -4,6 +4,7 @@
 #
 #    pipenv lock --requirements
 #
+python-dotenv
 gunicorn
 flask
 flask-login
