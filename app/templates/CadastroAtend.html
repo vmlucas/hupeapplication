@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registrar Atendimento de Avaliação - Intravitrea Hupe</title>
+  <script src="{{ url_for('static', filename= 'js/jquery-3.6.0.js') }}/"></script>  
+  <link href="{{ url_for('static', filename= 'css/style2.css') }}" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="{{ url_for('static', filename= 'js/jquery-3.5.1.min.js') }}/"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body id='mainPage' class="bg-grey">
+    <header>
+        <div class="col-100 bg-blue" >
+            <table>
+               <tr>
+                <td width="20%"><img src="{{ url_for('static', filename= 'img/topo_governo.png') }}"></td>
+                <td width="70%" align="left"><h3>Avaliações e Status - Intravitrea Hupe</h3></td>
+                <td width="10%"><br><img src="{{ url_for('static', filename= 'img/mandados.JPG') }}"></td>
+               </tr>
+            </table>
+        </div>
+    </header>
+    <hr class="col-100 bg-blue">
+    <div class="col-100 bg-blue" >                
+            <table >
+                <tr style="font-size: medium;font-weight: bold;">
+                    <td width="60"><lable id="ar" style="cursor: pointer;">| Atendimentos Realizados |</lable></td>  
+                    <td width="60"><lable id="aa" style="cursor: pointer;">| Avaliações e Status |</lable></td>  
+                    <td width="60"><lable id="agend" style="cursor: pointer;">| Aplicações de Medicamentos |</lable></td>
+                    <td width="60"><lable id="dashboard" style="cursor: pointer;" data-toggle='modal' data-target='#reportModal'>| Relatórios |</lable></td>                
+                </tr>
+             </table> 
+    </div>
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="reportModalLongTitle">Relatórios</h4>              
+            </div>
+            <div class="modal-body">
+               <table> 
+                <tr>
+                    <td>       
+                    <a href="https://charts.mongodb.com/charts-project-0-ohubx/public/dashboards/a5ca7e6b-efd7-4340-9cf4-5cf2d446d4a9" target="_blank">Dados Consolidados</a></td>
+                </tr>
+                <tr>
+                    <td>       
+                    <a href="https://charts.mongodb.com/charts-project-0-ohubx/public/dashboards/2964b645-cf3a-4105-b010-8a5c911b77ff" target="_bank">Tabelas com Dados Consolidados</a></td>
+                </tr>
+                <tr> 
+                    <td>       
+                    <a href="https://charts.mongodb.com/charts-project-0-ohubx/public/dashboards/5d365ac4-d9f5-4a58-afe7-c20a9e5d7a62" target="_blank">Pacientes com indicação, mas sem aplicação</a></td>
+                    </tr>
+                <tr>     
+                        <td>       
+                        <a href="https://charts.mongodb.com/charts-project-0-ohubx/public/dashboards/7e310031-fb46-4553-a435-afe773f24368" target="_blank">Pacientes em Lista de Espera</a></td>
+                </tr>    
+            </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div> 
+    <section>
+    <div class="col-70">
+       <br> 
+       <legend>{{ textoForm }}</legend>
+       <table>   
+        <tr>
+           <td> 
+                <table>
+                    <tr>
+                       <td align="center">
+                          <b>{{ titulo }}</b>
+                       </td>
+                       <td align="center">
+                            <!-- Button trigger modal dos arquivos de laudos-->
+  <button id="loadLaudos" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Laudos Cadastrados
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:800px;" >
+      <div class="modal-content">
+        <div class="modal-header bg-blue" >
+          <h3 class="modal-title" id="exampleModalLongTitle">Laudos</h3>          
+        </div>
+        <!-- form -->        
+        <div class="modal-body" style="margin: 0; padding: 0;">
+            <form method='POST' id="uploadForm" enctype="multipart/form-data"  class="box">
+              <div class="form-group"><p></p>
+                 <h4 class="modal-title">Novo Laudo</h4>
+                 <table>
+                     <tr>
+                         <td><input id="fileupload"  type="file" name="FilesPic"></td>
+                         <td><button type="submit" class="btn btn-primary mb-2">Salvar</button> </td>
+                     </tr>                     
+                 </table>
+              </div>   
+            </form>    
+            <hr style="margin: 0; padding: 0;"><p></p>  
+            <h4 class="modal-title">Laudos Cadastrados</h4>     
+            <div id="filesDiv" style="overflow-y: scroll;max-height:500px; ">  
+             <table id="filesTable"> 
+            
+             </table>
+           </div>
+        </div>        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!--<button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div> 
+                            <!--<a href="javascript:newPopup()">Laudos Existentes</a> -->
+                     </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nome:
+                        </td>    
+                        <td><input id="buscar" type="text" placeholder="{{ nome }}" name="Nome" value="{{ nome }}"> 
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td>
+                            CPF:
+                        </td><td><input id="cpf" type="text" placeholder="{{ cpf }}" name="CPF" value="{{ cpf }}">
+                        </td>
+                    </tr>
+            {% if tipo == 'dados' %} 
+              {% for d in data %} 
+                    <tr>
+                        <td>
+                            Processo Judicial:</td>
+                        <td>    
+                            <input id="processo" type="text" placeholder="{{ d['Processo_Judicial'] }}" name="Processo_Judicial" value="{{ d['Processo_Judicial'] }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Origem:</td>
+                        <td>    
+                            <select id="origem" name='origem'>
+                             <option value='Central de Mandados' {% if d.Origem=='Central de Mandados' %} selected='selected'{% endif %}>Central de Mandados</option>
+                             <option value='CLRS' {% if d.Origem=='CLRS' %} selected='selected'{% endif %}>CLRS</option>
+                             <option value='PGE' {% if d.Origem=='PGE' %} selected='selected'{% endif %}>PGE</option>
+                            </select>                                
+                        </td>
+                    </tr>
+                </table>
+                {% for lEspera in d.Lista_Espera %} 
+                <table>
+                    <tr>
+                        <td>Dados Lista de Espera
+                        <a data-toggle="collapse" href="#listaEspera">
+                          <img src="/css/seta.JPG" width="10" height="15" style="cursor: pointer;"></img>
+                        </a>
+                        </td>
+                    </tr>                    
+                </table>
+                <div id="listaEspera" class="panel-collapse collapse">  
+                    <table>
+                            <tr style="background-color:slategray; font-style: italic;font-size: 14;font-weight: bold;">
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">Medicamento</td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">Data</td>
+                                <td style="border: 1px solid black;
+                                    border-collapse: collapse;">Telefone</td>  
+                            </tr>
+                            
+                            <tr>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">{{ lEspera['Medicamento'] }}</td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">{{ lEspera['Data'] }}</td>
+                                <td style="border: 1px solid black;
+                                border-collapse: collapse;">{{ lEspera['Telefone'] }}</td>
+                            </tr>
+                            
+                            <!--<div id="">
+                            </div>-->                       
+                </table>
+                </div>
+                {% endfor %} 
+                <table>
+                    <tr>
+                        <td>Dados Atendimento Avaliação
+                        <lable id="loadAtendData" style="cursor: pointer; color: tomato;size: 15;">+</lable></td>
+                    </tr>                    
+                </table> 
+                <table id="atendData">
+                        <tr style="background-color:slategray; font-style: italic;font-size: 14;font-weight: bold;">
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Medicamento</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Data Avaliação</td>
+                            <td style="border: 1px solid black;
+                                border-collapse: collapse;">Indicação</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Agendamentos</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Obervações</td>  
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">Laudo do Atendimento</td>   
+                        </tr>
+                        {% for pa in d.Atendimento_Inicial  %} 
+                          <tr>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">{{ pa['Medicamento'] }}</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">{{ pa['Data_Atendimento'] }}</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">{{ pa['Indicacao'] }}</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">{{ pa['Agendado'] }}</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">{{ pa['OBS'] }}</td>
+                            <td style="border: 1px solid black;
+                            border-collapse: collapse;">
+                              {% if pa.Laudo != None %} 
+                               <a href="{{ pa['Laudo'] }}" target="_blank"><img src="{{ url_for('static', filename= 'img/Adobe_PDF-logo.png') }}" style="cursor: pointer;"></a></td>
+                              {% endif %} 
+                          </tr>
+                        {% endfor %}
+                        <!--<div id="">
+                        </div>-->                       
+                </table>
+                <table>
+                    <tr>
+                        <td align="center">
+                            {% if botao == 'update' %}
+                               <button id="update" class="button-big">Atualizar</button>
+                            {% else %}     
+                               <button id="insert" class="button-big">Salvar</button>
+                            {% endif %}   
+                        </td>
+                    </tr>
+                </table>
+              {% endfor %}   
+            {% endif %}  
+           </td>           
+        </tr>
+        </table>   
+    </div>
+</section>    
+
+<script>
+    var nomeLaudo="";
+
+    function newPopup(){
+      varWindow = window.open (
+      '/gcStorageFiles',
+      'Laudos',
+      "width=600, height=500, top=100, left=110,titlebar=0,toolbar=0,location=0,status=0,menubar=0" );
+     }
+
+     //action do menu   atendData
+    cont = 1;
+    
+      $( '#ar' ).click(function() {                                       
+         window.location.href = '/show';
+          }); 
+      
+      $( '#aa' ).click(function() {                                       
+           window.location.href = '/cadAtend';
+          });     
+      $( '#agend' ).click(function() {                                       
+           window.location.href = '/cadAplic';
+      }); 
+
+      
+      $('#filesDiv').on('click','button', function (evt) {
+        nomeLaudo = $(evt.target).attr("data-name")
+        //var $target = $(evt.target);
+        $('#labelLaudo').html( nomeLaudo );
+        $('#exampleModalLong').modal('hide')
+        //alert(nomeLaudo);
+      });
+      
+     
+      //eventos 
+      $('#loadLaudos').on('click', function(e){
+        filesLoad = "";  
+        $('#filesTable tr').remove();
+        e.preventDefault();
+        $.post('/buscarLaudos', 
+         function(json){
+
+            if( json.fileNames ){
+                json.fileNames.forEach(function(doc) {                                
+                filesLoad = filesLoad + "<tr><td>"+doc.name+"</td>";     
+                filesLoad = filesLoad + "<td><a href='https://storage.googleapis.com/hupeapp/"+doc.name+"' target='_blank'>";
+                filesLoad = filesLoad + "<img src='{{ url_for('static', filename= 'img/Adobe_PDF-logo.png') }}' style='cursor: pointer;'></a></td>";
+                filesLoad = filesLoad + "<td><button type='button' class='btn btn-primary' data-name='"+doc.name+"' >";
+                filesLoad = filesLoad + "Selecionar</button></td></tr>";
+                 })
+            }
+            $(filesLoad).appendTo('#filesTable');   
+
+         },'json');
+      });
+
+      $('#uploadForm').on('submit', function(e){
+        filesLoad = "";  
+        $('#filesTable tr').remove(); 
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append('file', $('#fileupload')[0].files[0]);
+
+        $.ajax({
+           url: '/uploads',
+           data: formData,
+           type: 'POST',
+           contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+           processData: false, // NEEDED, DON'T OMIT THIS
+           success: function(json) {
+            if( json.fileNames ){
+                json.fileNames.forEach(function(doc) {                                
+                filesLoad = filesLoad + "<tr><td>"+doc.name+"</td>";     
+                filesLoad = filesLoad + "<td><a href='https://storage.googleapis.com/hupeapp/"+doc.name+"' target='_blank'>";
+                filesLoad = filesLoad + "<img src='{{ url_for('static', filename= 'img/Adobe_PDF-logo.png') }}' style='cursor: pointer;'></a></td>";
+                filesLoad = filesLoad + "<td><button type='button' class='btn btn-primary' data-name='"+doc.name+"' >";
+                filesLoad = filesLoad + "Selecionar</button></td></tr>";
+                 })
+            }
+            $(filesLoad).appendTo('#filesTable');   
+           }
+       });
+        
+         
+      });
+
+          
+
+      $('#buscar').keypress(function (e) {
+                  var nomeBusca = $("#buscar").val();
+                  if (e.which == 13) {
+                    //validação formulário
+                    $(".error").remove();
+                    if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                    }  
+                    $('<form>', {
+                       "id" : "formJQ", 
+                       "html": '<input type="text" name="nomeBusca" value="' + nomeBusca + '" /><input type="text" name="CPF" value="" />',
+                       "action": '/buscarAtend',
+                       "method": 'POST'
+                    }).appendTo(document.body).submit();  
+                  return false;  
+            }
+      });
+      $('#cpf').keypress(function (e) {
+                  $(this).mask('000.000.000-00');
+                  var cpfBusca = $("#cpf").val();
+                  if (e.which == 13) {
+                    //validação formulário
+                    $(".error").remove();
+                    if (cpfBusca.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                    }  
+                    $('<form>', {
+                       "id" : "formJQ", 
+                       "html": '<input type="text" name="nomeBusca" value="" /><input type="text" name="CPF" value="' + cpfBusca + '" />',
+                       "action": '/buscarAtend',
+                       "method": 'POST'
+                    }).appendTo(document.body).submit();  
+                  return false;  
+            }
+      });
+
+      $('#insert').click(function() {
+                 var nomeBusca = $("#buscar").val();
+                 var cpf = $("#cpf").val();
+                 var processo = $("#processo").val();
+                 var origem = $("#origem").val();
+                 var med = $("#cboMed").val();
+                 var agendado = $("#agendado").val();
+                 var obs = $("#obs").val();
+                 var indic = $("#cboInd").val();
+                 var dataInput = $("#dateInput").val();
+                 
+                 $(".error").remove();
+                 if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                 }  
+                 if (cpf.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (processo.length < 1) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Processo Judicial do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (med == undefined) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Preencha o formulário de Dados de Agendamento!!</span>');
+                       return false;
+                 }
+                 if (med.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione o medicamento!!</span>');
+                       return false;
+                 }
+                 if (indic.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione a indicação!!</span>');
+                       return false;
+                 }
+                 if (dataInput.length < 10) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Entre com a Data da Aplicação!!</span>');
+                       return false;
+                 } 
+
+                 $('<form>', {
+                      "id" : "formSaveJQ", 
+                      "html": '<input type="text" name="Nome" value="' + nomeBusca + '" /><input type="text" name="CPF" value="' + cpf + '" /><input type="text" name="Processo_Judicial" value="' + processo + '" /><input type="text" name="origem" value="' + origem + '" /><input type="text" name="medic" value="' + med + '" /><input type="text" name="Data" value="' + dataInput + '" /><input type="text" name="indic" value="' + indic + '" /><input type="text" name="agendado" value="' + agendado + '" /><input type="text" name="obs" value="' + obs + '" /><input type="text" name="nomeLaudo" value="' + nomeLaudo + '" />',
+                      "action": '/insertDocAtend',
+                      "method": 'POST'
+                 }).appendTo(document.body).submit();  
+                 return false;  
+      });
+
+      $('#update').click(function() {
+                 var nomeBusca = $("#buscar").val();
+                 var cpf = $("#cpf").val();
+                 var processo = $("#processo").val();
+                 var origem = $("#origem").val();
+                 var med = $("#cboMed").val();
+                 var agendado = $("#agendado").val();
+                 var obs = $("#obs").val();
+                 var indic = $("#cboInd").val();
+                 var dataInput = $("#dateInput").val();
+                 
+                 $(".error").remove();
+                 if (nomeBusca.length < 1) {
+                       $('#buscar').after('<span class="error" style="color: tomato;">Nome do Paciente é necessário!!!</span>');
+                       return false;
+                 }  
+                 if (cpf.length < 1) {
+                       $('#cpf').after('<span class="error" style="color: tomato;">CPF do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (processo.length < 1) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Processo Judicial do Paciente é necessário!!!</span>');
+                       return false;
+                 }
+                 if (med == undefined) {
+                       $('#processo').after('<span class="error" style="color: tomato;">Preencha o formulário de Dados de Agendamento!!</span>');
+                       return false;
+                 }
+                 if (med.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione o medicamento!!</span>');
+                       return false;
+                 }
+                 if (indic.length < 1) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Selecione a indicação!!</span>');
+                       return false;
+                 }
+                 if (dataInput.length < 10) {
+                    $( '#loadAtendData' ).after('<span class="error" style="color: tomato;">Entre com a Data da Aplicação!!</span>');
+                       return false;
+                 } 
+
+                 $('<form>', {
+                      "id" : "formSaveJQ", 
+                      "html": '<input type="text" name="Nome" value="' + nomeBusca + '" /><input type="text" name="CPF" value="' + cpf + '" /><input type="text" name="Processo_Judicial" value="' + processo + '" /><input type="text" name="origem" value="' + origem + '" /><input type="text" name="medic" value="' + med + '" /><input type="text" name="Data" value="' + dataInput + '" /><input type="text" name="indic" value="' + indic + '" /><input type="text" name="agendado" value="' + agendado + '" /><input type="text" name="obs" value="' + obs + '" /><input type="text" name="nomeLaudo" value="' + nomeLaudo + '" />',
+                      "action": '/updateDocAtend',
+                      "method": 'POST'
+                 }).appendTo(document.body).submit();  
+                 return false;  
+      });
+
+      $( '#loadAtendData' ).click(function() {    
+         // alert("Clicou");                                   
+        //<div id="agendData">
+        divLoad = "<tr><td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<select id='cboMed' name='Medicamento'>";
+        divLoad = divLoad +"<option value=''></option>";
+        divLoad = divLoad +"<option value='ANTI-VEGF'>ANTI-VEGF</option>";
+        divLoad = divLoad +"<option value='AFLIBERCEPTE (Eylia®)'>AFLIBERCEPTE (Eylia®)</option>";
+        divLoad = divLoad +"<option value='TRIANCINOLONA ACETONIDA'>TRIANCINOLONA ACETONIDA</option>";
+        divLoad = divLoad +"<option value='RANIBIZUMABE (Lucentis®)'>RANIBIZUMABE (Lucentis®)</option>";
+        divLoad = divLoad +"<option value='INJE -O INTRAVíTREA VEFG'>INJE -O INTRAVíTREA VEFG</option>";
+        divLoad = divLoad +"<option value='DEXAMETASONA (Ozurdex®)'>DEXAMETASONA (Ozurdex®)</option>";
+        divLoad = divLoad +"<option value='BEVACIZUMABE (Avastin®)'>BEVACIZUMABE (Avastin®)</option>";
+        divLoad = divLoad +"</select></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<input id='dateInput' type='text' placeholder='dd/mm/aaaa' name='Data'></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<select id='cboInd' name='Indicacao'>";
+        divLoad = divLoad +"<option value=''></option>";
+        divLoad = divLoad +"<option value='SIM OE'>SIM OE</option>";
+        divLoad = divLoad +"<option value='SIM OD'>SIM OD</option>";
+        divLoad = divLoad +"<option value='SIM AO'>SIM AO</option>";
+        divLoad = divLoad +"<option value='PRIMEIRO FOTOCOAGULAÇAO DEPOIS IV.'>PRIMEIRO FOTOCOAGULAÇAO DEPOIS IV.</option>";
+        divLoad = divLoad +"<option value='SEM INDICAÇÃO'>SEM INDICAÇÃO</option>";
+        divLoad = divLoad +"<option value='NÃO COMPARECEU'>NÃO COMPARECEU</option>";
+        divLoad = divLoad +"<option value='AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO'>AVALIAÇÃO DE EXAME APOS VERIFICAR INDICAÇÃO</option>";
+        divLoad = divLoad +"</select></td>"; 
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<input id='agendado' type='text' name='agendado'></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<input id='obs' type='text' name='obs'></td>";
+        divLoad = divLoad +"<td style='border: 1px solid black;border-collapse: collapse;'>";
+        divLoad = divLoad +"<label id='labelLaudo'/>&nbsp;<button id='loadLaudos' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>";
+        divLoad = divLoad +"Selecionar Laudo </button>";
+        
+        divLoad = divLoad + "</td></tr>";
+        $(divLoad).appendTo('#atendData');   
+        
+        $('#dateInput').keypress(function (e) {
+           $(this).mask("00/00/0000");
+        });
+
+        cont++;
+        });
+    </script> 
+
+</body>
+</html>

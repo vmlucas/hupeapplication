@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Insert Serie Info {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Year">Year</label>
+        <input type="text" name="Year"
+               placeholder="Post Year" class="form-control"
+               value="{{ request.form['Year'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="SeriesName">SeriesName</label>
+        <input type="text" name="SeriesName"
+               placeholder="Post SeriesName" class="form-control"
+               value="{{ request.form['SeriesName'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="Season">Season</label>
+        <input type="text" name="Season"
+               placeholder="Post Season" class="form-control"
+               value="{{ request.form['Season'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="Provider">Provider</label>
+        <input type="text" name="Provider"
+               placeholder="Post Provider" class="form-control"
+               value="{{ request.form['Provider'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="App">App</label>
+        <input type="text" name="App"
+               placeholder="Post App" class="form-control"
+               value="{{ request.form['App'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <select id='cboMed' name='Status' placeholder="Post Status" class="form-control"
+        value="{{ request.form['Status'] }}">
+            <option value='Watched'>Watched</option>
+            <option value='Watching'>Watching</option>
+            <option value='Waiting'>Waiting</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
+
+'Year' : int(df['Year'][index]),
+                          'SeriesName' : df['SeriesName'][index],
+                          'Season': int(df['Season'][index]),
+                          'Provider' : df['Provider'][index],
+                          'App' : df['App'][index],
+                          'Status' : df['Status'][index]

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hardy-magpie-203501",
+  "private_key_id": "79da7bd7faaee392da3a6f71e6896863293dc26b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD55+go+EMN5aoM\nIzpvcuuudZXDnQYYg2NOt9POO1ge7/AJjIK/7HKFhkXZj4wgWtqJXtPYeh//uAvE\nzuEzxvo+9D4fPZB6EFLu7QEjGpzBghhJmJ1LObAjRz1jbhXXwT3bMmIVI7XLOWpM\nKhg2LfWXj/H/EOWR79SJ8rR0uIzjoNTN2ySPh+Zx7n+WRVAPflREDuOnKR7B7/Cf\n54nXF17VqDPe7uyVRbb/PR2fby0zPsZ3YcDNho2eSXT1oyVu5jK2W6uztaQ6TbB7\nCK5U/DzAJYGfAz72gL2WDbiAIBMkALiQTsBTMNJnOzU8W20wUF5MyVbaYjpVJPCw\n6lAVDRKVAgMBAAECggEABC9AXKQh1yJtiaRnzhajD9REvhIjY3h5fLQgWY57yjgh\n+E9PlKZwk8hSaVz8PW50jR/276EIZ3DTa1zBugFxjpYL4ioI342BjaewkbTd7/c5\nMDGZfpUlk9BCFz4MIxBjY410xZoFNy+CENn+B4jUb2yRn7/v/FS64EUo0y5NqtyB\nOzd7ZjYlD4FxzohsBzzoGXo531KOZjOL0BH8765RZX+4xTOKfGdxg+TUpKrHYpRy\nudFtumQIAQt0ac9WaroOOgEZEbB6Mf6pYB5X9ZY1CqiTX6SmqJfBPSAK2TayF93Y\nT9AqQM6WitIxUS043bTEJQDpOPde6TyVSb18T3YZ4QKBgQD9K/A3wrTN/JzXpOkx\nI2kpUYkoWuiv+IIOowcpLm8hKTnWlFKWx/uQB7nZR/HswNeKzS0+bCrJqiaLE7sw\nw2+3pA2/fZkb9zyOT7NAr/V+0mSg2R0vUlHcGb8FaxQuYgulkhsR/bFYJoRQp4eF\nNE8cqpq2oltsaYqw8sKjFgkLpwKBgQD8sqDsM8HHinCW08qa/CyHVphDApjrz4w/\nGwGIRaLgsCVqqs/Z/lXqjLYZJl8YfhX9gnNWUoFDDbNJ3Hy3K44x6Kygqv/gNc2m\nOhX1NP4YhgsDXoTs/Op1FCXkSQWvijpTuMvTRRLRt/uL62vkyTHqPMsnsTGs6qAH\nlCBChWQHYwKBgCrHe+XQLsEHyHDf2s+EzkY/EtAQ3HSvpzpV7eXVhM2zq6RIl9QG\noslppMvETmrVAxbfKJ/9oxVEfRLPGLharcv4GqKa1H5XPpJFgWKS2Qa/AmXziezv\nGgn5B8Agod5cjt9BWvWlSow8pesDA/FML3oGkfH+aThedSMFQkJQfOLNAoGBAOxa\nX23OEyeB80D/o3dG+pczhYLXwRR+sdysc8hz6Z5i4vxb+8EXxGB3cDMh0rxj4kmV\nZC+PR9vhypoBIp1onb1MtXoptt6NNGaP2c3Z3PgvF8n09Dt9bAZJ7A8Txb+keF2q\ncOqQpsOFZEBA2E/LZ2aBqjrb32yunzO3dl0ByselAoGAWQwgV+57/Lo3jAIrKOPt\nqojwPcJviGRYE2hgsz6RhOgCaPjm0B7pGKmOcKd3LZkvlOrWPG+tN+BzBDcnLDfy\novSO3HtRLAiSNY1KF8lmDFsbqtHU3RfI4OKC23u7QlOKkFHsBMc4VgZQK77yxGYp\nhDUKfJlBr4Bl96SHdbA1EDc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gcstorageservice@hardy-magpie-203501.iam.gserviceaccount.com",
+  "client_id": "100882164009887650143",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gcstorageservice%40hardy-magpie-203501.iam.gserviceaccount.com"
+}
