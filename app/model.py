@@ -6,14 +6,23 @@ from pandas import DataFrame
 from bson.objectid import ObjectId
 from datetime import datetime
 import app.gcStorageModel as gcStorage  
-import os 
-from dotenv import load_dotenv
+#import os 
+#from dotenv import load_dotenv
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
-load_dotenv()
+#load_dotenv()
 
-db_user = os.getenv('db_user')
-db_pass = os.getenv('db_pass')
-db_server = os.getenv('db_server')
+default_credential = DefaultAzureCredential()
+client = SecretClient(vault_url="https://formula1vmlucaskeys.vault.azure.net/", credential=default_credential)
+
+retrieved_secret = (client.get_secret("mongo-server")).value
+#db_user = os.getenv('db_user')
+#db_pass = os.getenv('db_pass')
+#db_server = os.getenv('db_server')
+db_user = (client.get_secret("mongo-login")).value
+db_pass = (client.get_secret("mongo-pass")).value
+db_server = (client.get_secret("mongo-server")).value
 
 #returns the Collection from the Home DB MongoDB Atlas
 def getCollection():
