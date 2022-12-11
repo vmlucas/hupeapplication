@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect, ses
 from flask_login import current_user, UserMixin, LoginManager, login_required, login_user,logout_user
 import pandas as pd
 from pandas import DataFrame 
-from app.model import insertDataAtend, insertDataAplic, getAllData, getPaciente, getCollectionsNotNull, getData, uploadGCStorage, listFiles
+from app.model import insertDataAtend, insertDataAplic, getAllData, getPaciente, getCollectionsNotNull, getData, uploadStorage, listFiles
 import os
 from flask_sqlalchemy import SQLAlchemy
 
@@ -110,7 +110,7 @@ def buscarLaudos():
 @login_required
 def uploads():           
       myFile = request.files['file']
-      uploadGCStorage(myFile)
+      uploadStorage(myFile)
 
       files = listFiles()
       json = {"message": "Upload was successful",

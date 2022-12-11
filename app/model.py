@@ -33,7 +33,7 @@ def getCollection():
 # - It uploads a file to the image bucket on Google Cloud
 # - It accepts an object as an argument with the
 #   "originalname" and "buffer" as keys
-def uploadGCStorage(file):
+def uploadStorage(file):
    storage.uploadGCStorage(file)        
 
 
